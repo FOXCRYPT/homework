@@ -20,7 +20,7 @@ class InfoMessage:
     
 
     def get_message(self) -> str:
-        #message: str = ('Тип тренировки: {}; Длительность: {:.3f} ч.; Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч; Потрачено ккал: {:.3f}.')
+
         return (f'Тип тренировки: {self.training_type}; '
                 f'Длительность: {self.duration:.3f} ч.; '
                 f'Дистанция: {self.distance:.3f} км; '
