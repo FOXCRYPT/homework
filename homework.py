@@ -5,14 +5,29 @@ from dataclasses import dataclass, asdict
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
-    training_type: str 
-    duration: float 
-    distance: float 
-    speed: float 
-    calories: float 
-    message: str = ('Тип тренировки: {}; Длительность: {:.3f} ч.; Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч; Потрачено ккал: {:.3f}.')
+    def __init__(self,
+                training_type: str, 
+                duration: float,
+                distance: float,
+                speed: float,
+                calories: float) -> None:
+
+        self.training_type = training_type
+        self.duration = duration
+        self.distance = distance
+        self.speed = speed
+        self.calories = calories
+    
+
     def get_message(self) -> str:
-        return self.message.format(*asdict(self).values())
+        #message: str = ('Тип тренировки: {}; Длительность: {:.3f} ч.; Дистанция: {:.3f} км; Ср. скорость: {:.3f} км/ч; Потрачено ккал: {:.3f}.')
+        return (f'Тип тренировки: {self.training_type}; '
+                f'Длительность: {self.duration:.3f} ч.; '
+                f'Дистанция: {self.distance:.3f} км; '
+                f'Ср. скорость: {self.speed:.3f} км/ч; '
+                f'Потрачено ккал: {self.calories:.3f}.')
+
+        
 class Training:
     """Базовый класс тренировки."""    
     MIN_IN_H: int = 60
@@ -144,6 +159,7 @@ class Swimming(Training):
         calories_2: float =  2  
         calories: float = ( self.get_mean_speed() + calories_1 ) * calories_2 * self.weigth
         return calories
+        
         
 
 def read_package(workout_type: str, data: List[int]) -> Training:
