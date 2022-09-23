@@ -98,7 +98,7 @@ class Running(Training):
         calories: float = ((coeff_calorie_1 * self.get_mean_speed()
                            - coeff_calorie_2)
                            * self.weigth
-                           / self.M_IN_KM *
+                            / self.M_IN_KM *
                            self.duration * 60)
         return calories
 
