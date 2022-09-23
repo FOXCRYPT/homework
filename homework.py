@@ -61,7 +61,7 @@ class Training:
                             - coeff_calorie_2)
                            * self.weigth
                            / self.M_IN_KM
-                            * self.duration)
+                           * self.duration)
         return calories
 
     def show_training_info(self) -> InfoMessage:
