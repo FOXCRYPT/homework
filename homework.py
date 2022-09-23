@@ -59,7 +59,7 @@ class Training:
         coeff_calorie_2: int = 20
         calories: float = ((coeff_calorie_1 * self.get_mean_speed()
                             - coeff_calorie_2) 
-                            * self.weigth / self.M_IN_KM
+                             * self.weigth / self.M_IN_KM
                             * self.duration)
         return calories
 
@@ -97,8 +97,8 @@ class Running(Training):
         coeff_calorie_2: int = 20
         calories: float = ((coeff_calorie_1 * self.get_mean_speed()
                            - coeff_calorie_2)
-                           * self.weigth / 
-                           self.M_IN_KM *
+                           * self.weigth
+                           / self.M_IN_KM *
                            self.duration * 60)
         return calories
 
@@ -131,8 +131,8 @@ class SportsWalking(Training):
         call_3: float = 0.029
         sw_calories: float = ((call_1 * self.weigth
                               + (self.get_mean_speed()
-                              ** call_2
-                              // self.height) * call_3
+                               ** call_2
+                               // self.height) * call_3
                               * self.weigth) * self.duration * 60)
         return sw_calories
 
