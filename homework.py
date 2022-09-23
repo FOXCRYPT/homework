@@ -59,8 +59,8 @@ class Training:
         coeff_calorie_2: int = 20
         calories: float = ((coeff_calorie_1 * self.get_mean_speed()
                             - coeff_calorie_2)
-                            * self.weigth
-                            / self.M_IN_KM
+                           * self.weigth
+                           / self.M_IN_KM
                             * self.duration)
         return calories
 
@@ -100,7 +100,7 @@ class Running(Training):
                            - coeff_calorie_2)
                            * self.weigth
                            / self.M_IN_KM
-                           *self.duration * 60)
+                           * self.duration * 60)
         return calories
 
 
