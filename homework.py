@@ -71,11 +71,11 @@ class Running(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.COEFF_CALORIE_1 * ((self.action * self.LEN_STEP
-                           / self.M_IN_KM)/self.duration)
-                           - self.COEFF_CALORIE_2)
-                           * self.weigth
-                           / self.M_IN_KM
-                           * self.duration * self.MIN_IN_H)
+                / self.M_IN_KM)/self.duration)
+                - self.COEFF_CALORIE_2)
+                * self.weigth
+                / self.M_IN_KM
+                * self.duration * self.MIN_IN_H)
 
 
 class SportsWalking(Training):
@@ -101,10 +101,10 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.call_1 * self.weigth
-                              + (self.get_mean_speed()
-                               ** self.call_2
-                               // self.height) * self.call_3
-                              * self.weigth) * self.duration * self.MIN_IN_H)
+                + (self.get_mean_speed()
+                ** self.call_2
+                // self.height) * self.call_3
+                * self.weigth) * self.duration * self.MIN_IN_H)
 
 
 class Swimming(Training):
