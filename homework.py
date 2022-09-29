@@ -53,7 +53,7 @@ class Training:
 
     def get_spent_calories(self):
         """Получить количество затраченных калорий."""
-        #переопределение метода расчета калорий
+        # переопределение метода расчета калорий
         raise NotImplementedError
 
     def show_training_info(self) -> InfoMessage:
@@ -73,9 +73,9 @@ class Running(Training):
     def get_spent_calories(self) -> float:
         return ((self.COEFF_CALORIE_1
                 * ((self.action
-                * self.LEN_STEP
-                / self.M_IN_KM)
-                / self.duration)
+                 * self.LEN_STEP
+                 / self.M_IN_KM)
+                 / self.duration)
                 - self.COEFF_CALORIE_2)
                 * self.weigth
                 / self.M_IN_KM
@@ -87,7 +87,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     COEFF_CALORIE_1: float = 0.035
     COEFF_CALORIE_2: float = 0.029
-    TWO: float = 2   
+    TWO: float = 2
 
     def __init__(self,
                  action: int,
@@ -134,7 +134,7 @@ class Swimming(Training):
         self.action = action
         self.length_pool = length_pool
         self.count_pool = count_pool
-    
+
     def get_mean_speed(self) -> float:
         return (self.length_pool
                 * self.count_pool
