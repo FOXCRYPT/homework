@@ -31,7 +31,7 @@ class Training:
     """Базовый класс тренировки."""
     MIN_IN_H: float = 60
     LEN_STEP: float = 0.65
-    M_IN_KM: int = 1000
+    M_IN_KM: float = 1000
 
     def __init__(self,
                  action: int,
@@ -53,7 +53,7 @@ class Training:
 
     def get_spent_calories(self):
         """Получить количество затраченных калорий."""
-        # переопределение метода расчета калорий
+        # переопределение метода расчета калорий в каждом классе
         raise NotImplementedError
 
     def show_training_info(self) -> InfoMessage:
@@ -67,16 +67,16 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    COEFF_CALORIE_1: float = 18
-    COEFF_CALORIE_2: float = 20
+    COEFF_MEAN_SPEED_1: float = 18
+    COEFF_MEAN_SPEED_2: float = 20
 
     def get_spent_calories(self) -> float:
-        return ((self.COEFF_CALORIE_1
+        return ((self.COEFF_MEAN_SPEED_1
                 * ((self.action
                  * self.LEN_STEP
                  / self.M_IN_KM)
                  / self.duration)
-                - self.COEFF_CALORIE_2)
+                - self.COEFF_MEAN_SPEED_2)
                 * self.weigth
                 / self.M_IN_KM
                 * self.duration
@@ -85,9 +85,9 @@ class Running(Training):
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    COEFF_CALORIE_1: float = 0.035
-    COEFF_CALORIE_2: float = 0.029
-    TWO: float = 2
+    COEFF_OF_WEIGHT_1: float = 0.035
+    COEFF_OF_WEIGHT_2: float = 0.029
+    COEFF_OF_MEAN_SPEED_SW: float = 2
 
     def __init__(self,
                  action: int,
@@ -101,16 +101,15 @@ class SportsWalking(Training):
         self.height = height
 
     def get_mean_speed(self) -> float:
-        distance_KM = self.action * self.LEN_STEP / self.M_IN_KM
-        return distance_KM / self.duration
+        return (self.action * self.LEN_STEP / self.M_IN_KM)/ self.duration
 
     def get_spent_calories(self) -> float:
-        return ((self.COEFF_CALORIE_1
+        return ((self.COEFF_OF_WEIGHT_1
                 * self.weigth
                 + (self.get_mean_speed()
-                 ** self.TWO
+                 ** self.COEFF_OF_MEAN_SPEED_SW
                  // self.height)
-                 * self.COEFF_CALORIE_2
+                 * self.COEFF_OF_WEIGHT_2
                 * self.weigth)
                 * self.duration
                 * self.MIN_IN_H)
@@ -119,8 +118,8 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
-    COEFF_CALORIE_1: float = 1.1
-    COEFF_CALORIE_2: float = 2
+    COEFF_OF_MEAN_SPEED_1: float = 1.1
+    COEFF_OF_MEAN_SPEED_2: float = 2
 
     def __init__(self,
                  action: int,
@@ -143,20 +142,21 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.get_mean_speed()
-                + self.COEFF_CALORIE_1)
-                * self.COEFF_CALORIE_2
+                + self.COEFF_OF_MEAN_SPEED_1)
+                * self.COEFF_OF_MEAN_SPEED_2
                 * self.weigth)
 
+TYPES_OF_SPORTS: Dict[str, Type[Training]] = {
+        'SWM': Swimming,
+        'RUN': Running,
+        'WLK': SportsWalking,
+    }
 
 def read_package(workout_type: str, data: List[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    PACKAGES: Dict[str, Type[Training]] = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking}
-    if workout_type not in PACKAGES:
-        raise ValueError('Не найдена тренировка', ValueError)
-    return PACKAGES[workout_type](*data)
+    if workout_type not in TYPES_OF_SPORTS:
+        raise ValueError(f'Тренировка не найдена {workout_type}{ValueError}')
+    return TYPES_OF_SPORTS[workout_type](*data)
 
 
 def main(training: Training) -> None:
