@@ -151,7 +151,7 @@ TYPES_OF_SPORTS: Dict[str, Type[Training]] = {
     'SWM': Swimming,
     'RUN': Running,
     'WLK': SportsWalking,
-    }
+}
 
 
 def read_package(workout_type: str, data: List[int]) -> Training:
