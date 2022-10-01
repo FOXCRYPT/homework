@@ -101,7 +101,7 @@ class SportsWalking(Training):
         self.height = height
 
     def get_mean_speed(self) -> float:
-        return (self.action * self.LEN_STEP / self.M_IN_KM)/ self.duration
+        return (self.action * self.LEN_STEP / self.M_IN_KM) / self.duration
 
     def get_spent_calories(self) -> float:
         return ((self.COEFF_OF_WEIGHT_1
@@ -146,11 +146,13 @@ class Swimming(Training):
                 * self.COEFF_OF_MEAN_SPEED_2
                 * self.weigth)
 
+
 TYPES_OF_SPORTS: Dict[str, Type[Training]] = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking,
+    'SWM': Swimming,
+    'RUN': Running,
+    'WLK': SportsWalking,
     }
+
 
 def read_package(workout_type: str, data: List[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
