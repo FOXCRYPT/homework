@@ -54,7 +54,8 @@ class Training:
     def get_spent_calories(self):
         """Получить количество затраченных калорий."""
         # переопределение метода расчета калорий в каждом классе
-        raise NotImplementedError(f'метод не определен в классе {self.__class__.__name__}') 
+        raise NotImplementedError(f'метод не определен'
+         f' в классе {self.__class__.__name__}')
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
