@@ -54,7 +54,7 @@ class Training:
     def get_spent_calories(self):
         """Получить количество затраченных калорий."""
         # переопределение метода расчета калорий в каждом классе
-        raise NotImplementedError
+        raise NotImplementedError(f'метод не определен в классе {self.__class__.__name__}') 
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -87,7 +87,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     COEFF_OF_WEIGHT_1: float = 0.035
     COEFF_OF_WEIGHT_2: float = 0.029
-    COEFF_OF_MEAN_SPEED_SW: float = 2
+    COEFF_OF_EXPONENTIATION: float = 2
 
     def __init__(self,
                  action: int,
@@ -107,7 +107,7 @@ class SportsWalking(Training):
         return ((self.COEFF_OF_WEIGHT_1
                 * self.weigth
                 + (self.get_mean_speed()
-                 ** self.COEFF_OF_MEAN_SPEED_SW
+                 ** self.COEFF_OF_EXPONENTIATION
                  // self.height)
                  * self.COEFF_OF_WEIGHT_2
                 * self.weigth)
@@ -119,7 +119,7 @@ class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
     COEFF_OF_MEAN_SPEED_1: float = 1.1
-    COEFF_OF_MEAN_SPEED_2: float = 2
+    COEFF_OF_WEGHT: float = 2
 
     def __init__(self,
                  action: int,
@@ -143,7 +143,7 @@ class Swimming(Training):
     def get_spent_calories(self) -> float:
         return ((self.get_mean_speed()
                 + self.COEFF_OF_MEAN_SPEED_1)
-                * self.COEFF_OF_MEAN_SPEED_2
+                * self.COEFF_OF_WEGHT
                 * self.weigth)
 
 
@@ -157,7 +157,7 @@ TYPES_OF_SPORTS: Dict[str, Type[Training]] = {
 def read_package(workout_type: str, data: List[int]) -> Training:
     """Прочитать данные полученные от датчиков."""
     if workout_type not in TYPES_OF_SPORTS:
-        raise ValueError(f'Тренировка не найдена {workout_type}{ValueError}')
+        raise ValueError(f'Тренировка не найдена {workout_type}')
     return TYPES_OF_SPORTS[workout_type](*data)
 
 
